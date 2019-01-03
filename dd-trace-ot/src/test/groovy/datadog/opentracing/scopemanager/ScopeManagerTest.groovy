@@ -589,8 +589,19 @@ class ScopeManagerTest extends Specification {
     }
 
     @Override
+    Scope activate(Span span) {
+      set(span)
+      return this
+    }
+
+    @Override
     Scope active() {
       return get() == null ? null : this
+    }
+
+    @Override
+    Span activeSpan() {
+      return active()?.span()
     }
 
     String toString() {
