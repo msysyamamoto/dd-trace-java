@@ -14,6 +14,7 @@ import com.datastax.driver.core.Statement;
 import com.google.common.base.Function;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.MoreExecutors;
 import io.opentracing.Span;
 import io.opentracing.Tracer;
 import java.util.Map;
@@ -51,7 +52,9 @@ public class TracingSession implements Session {
           public Session apply(final Session session) {
             return new TracingSession(session, tracer);
           }
-        });
+        },
+        MoreExecutors.directExecutor()
+    );
   }
 
   @Override
